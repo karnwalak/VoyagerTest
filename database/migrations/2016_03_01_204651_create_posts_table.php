@@ -27,7 +27,7 @@ class CreatePostsTable extends Migration
             $table->text('meta_description');
             $table->text('meta_keywords');
             $table->enum('status', ['PUBLISHED', 'DRAFT', 'PENDING'])->default('DRAFT');
-            $table->string('featured')->default(0);
+            $table->string('featured')->nullable();
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('users');

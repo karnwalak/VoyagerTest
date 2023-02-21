@@ -27,6 +27,51 @@ class DataTypesTableSeeder extends Seeder
             ])->save();
         }
 
+        $dataType = $this->dataType('slug', 'countries');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name' => 'countries',
+                'display_name_singular' => 'Country',
+                'display_name_plural' => 'Countries',
+                'icon' => 'voyager-person',
+                'model_name' => 'App\\Models\\Country',
+                'policy_name' => '',
+                'controller' => '',
+                'generate_permissions' => 1,
+                'description' => '',
+            ])->save();
+        }
+
+        $dataType = $this->dataType('slug', 'posts');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name' => 'posts',
+                'display_name_singular' => 'Post',
+                'display_name_plural' => 'Posts',
+                'icon' => 'voyager-bubble',
+                'model_name' => 'App\\Models\\Post',
+                'policy_name' => '',
+                'controller' => '',
+                'generate_permissions' => 1,
+                'description' => '',
+            ])->save();
+        }
+
+        $dataType = $this->dataType('slug', 'categories');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name' => 'categories',
+                'display_name_singular' => 'Category',
+                'display_name_plural' => 'Categories',
+                'icon' => 'voyager-bubble',
+                'model_name' => 'App\\Models\\Category',
+                'policy_name' => '',
+                'controller' => '',
+                'generate_permissions' => 1,
+                'description' => '',
+            ])->save();
+        }
+
         $dataType = $this->dataType('slug', 'menus');
         if (!$dataType->exists) {
             $dataType->fill([

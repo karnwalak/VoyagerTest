@@ -15,7 +15,541 @@ class DataRowsTableSeeder extends Seeder
     {
         $userDataType = DataType::where('slug', 'users')->firstOrFail();
         $menuDataType = DataType::where('slug', 'menus')->firstOrFail();
-        $roleDataType = DataType::where('slug', 'roles')->firstOrFail();
+        $countryDataType = DataType::where('slug', 'countries')->firstOrFail();
+        $roleDataType= DataType::where('slug', 'roles')->firstOrFail();
+        $rolePostType= DataType::where('slug', 'posts')->firstOrFail();
+        $categoryType = DataType::where('slug', 'categories')->firstOrFail();
+
+        $dataRow = $this->dataRow($categoryType, 'id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'number',
+                'display_name' => __('voyager::seeders.data_rows.id'),
+                'required' => 1,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'order' => 1,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($categoryType, 'parent_id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'number',
+                'display_name' => __('voyager::seeders.data_rows.parent_id'),
+                'required' => 1,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'order' => 1,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($categoryType, 'order');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.order'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 8,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($categoryType, 'name');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.name'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 8,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($categoryType, 'slug');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.slug'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 8,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($categoryType, 'created_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'timestamp',
+                'display_name' => __('voyager::seeders.data_rows.created_at'),
+                'required' => 0,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'order' => 13,
+            ])->save();
+        }
+        
+        $dataRow = $this->dataRow($categoryType, 'updated_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'timestamp',
+                'display_name' => __('voyager::seeders.data_rows.updated_at'),
+                'required' => 0,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'order' => 14,
+            ])->save();
+        }
+
+        // $dataRow = $this->dataRow($categoryType, 'category_hasmany_post_relationship');
+        // if (!$dataRow->exists) {
+        //     $dataRow->fill([
+        //         'type' => 'relationship',
+        //         'display_name' => 'Post',
+        //         'required' => 0,
+        //         'browse' => 1,
+        //         'read' => 1,
+        //         'edit' => 1,
+        //         'add' => 1,
+        //         'delete' => 0,
+        //         'details' => [
+        //             'model' => 'App\\Models\\Post',
+        //             'table' => 'posts',
+        //             'type' => 'hasMany',
+        //             'column' => 'post_id',
+        //             'key' => 'id',
+        //             'label' => 'display_name',
+        //             'pivot_table' => 'posts',
+        //             'pivot' => 0,
+        //         ],
+        //         'order' => 15,
+        //     ])->save();
+        // }
+
+        $dataRow = $this->dataRow($categoryType, 'category_belongsto_category_relationship');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'relationship',
+                'display_name' => 'Parent Category',
+                'required' => 0,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 0,
+                'details' => [
+                    'model' => 'App\\Models\\Category',
+                    'table' => 'categories',
+                    'type' => 'belongsTo',
+                    'column' => 'parent_id',
+                    'key' => 'id',
+                    'label' => 'display_name',
+                    'pivot_table' => 'categories',
+                    'pivot' => 0,
+                ],
+                'order' => 15,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($categoryType, 'category_hasmany_category_relationship');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'relationship',
+                'display_name' => 'Sub Category',
+                'required' => 0,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 0,
+                'details' => [
+                    'model' => 'App\\Models\\Category',
+                    'table' => 'categories',
+                    'type' => 'hasMany',
+                    'column' => 'parent_id',
+                    'key' => 'id',
+                    'label' => 'display_name',
+                    'pivot_table' => 'categories',
+                    'pivot' => 0,
+                ],
+                'order' => 15,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'number',
+                'display_name' => __('voyager::seeders.data_rows.id'),
+                'required' => 1,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'order' => 1,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'author_id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'number',
+                'display_name' => 'User',
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 16,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'category_id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'number',
+                'display_name' => __('voyager::seeders.data_rows.category'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 2,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'title');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.title'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 3,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'seo_title');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.seo_title'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 4,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'excerpt');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.excerpt'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 5,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'body');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.body'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 6,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'image');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'image',
+                'display_name' => 'Image',
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 7,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'slug');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.slug'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 8,
+                
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'meta_description');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.meta_description'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 9,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'meta_keywords');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.meta_keywords'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 10,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'status');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.status'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 11,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'featured');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.featured'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 12,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'created_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'timestamp',
+                'display_name' => __('voyager::seeders.data_rows.created_at'),
+                'required' => 0,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'order' => 13,
+            ])->save();
+        }
+        
+        $dataRow = $this->dataRow($rolePostType, 'updated_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'timestamp',
+                'display_name' => __('voyager::seeders.data_rows.updated_at'),
+                'required' => 0,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'order' => 14,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'post_belongsto_user_relationship');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'relationship',
+                'display_name' => 'User',
+                'required' => 0,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 0,
+                'details' => [
+                    'model' => 'App\\Models\\User',
+                    'table' => 'users',
+                    'type' => 'belongsTo',
+                    'column' => 'author_id',
+                    'key' => 'id',
+                    'label' => 'display_name',
+                    'pivot_table' => 'users',
+                    'pivot' => 0,
+                ],
+                'order' => 15,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($rolePostType, 'post_belongsto_category_relationship');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'relationship',
+                'display_name' => __('voyager::seeders.data_rows.category'),
+                'required' => 0,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 0,
+                'details' => [
+                    'model' => 'App\\Models\\Category',
+                    'table' => 'categories',
+                    'type' => 'belongsTo',
+                    'column' => 'category_id',
+                    'key' => 'id',
+                    'label' => 'display_name',
+                    'pivot_table' => 'categories',
+                    'pivot' => 0,
+                ],
+                'order' => 17,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($countryDataType, 'id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'number',
+                'display_name' => __('voyager::seeders.data_rows.id'),
+                'required' => 1,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'order' => 1,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($countryDataType, 'name');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => __('voyager::seeders.data_rows.name'),
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 2,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($countryDataType, 'code');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'text',
+                'display_name' => 'Code',
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'order' => 2,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($countryDataType, 'created_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'timestamp',
+                'display_name' => __('voyager::seeders.data_rows.created_at'),
+                'required' => 0,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'order' => 6,
+            ])->save();
+        }
+        
+        $dataRow = $this->dataRow($countryDataType, 'updated_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'timestamp',
+                'display_name' => __('voyager::seeders.data_rows.updated_at'),
+                'required' => 0,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 0,
+                'add' => 0,
+                'delete' => 0,
+                'order' => 7,
+            ])->save();
+        }
 
         $dataRow = $this->dataRow($userDataType, 'id');
         if (!$dataRow->exists) {
@@ -159,6 +693,31 @@ class DataRowsTableSeeder extends Seeder
                     'pivot'       => 0,
                 ],
                 'order'        => 10,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($userDataType, 'user_hasmany_post_relationship');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'relationship',
+                'display_name' => 'Post',
+                'required' => 0,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 0,
+                'details' => [
+                    'model' => 'App\\Models\\Post',
+                    'table' => 'posts',
+                    'type' => 'hasMany',
+                    'column' => 'author_id',
+                    'key' => 'id',
+                    'label' => 'display_name',
+                    'pivot_table' => 'posts',
+                    'pivot' => 0,
+                ],
+                'order' => 10,
             ])->save();
         }
 

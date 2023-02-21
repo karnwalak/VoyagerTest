@@ -51,6 +51,22 @@ class MenuItemsTableSeeder extends Seeder
 
         $menuItem = MenuItem::firstOrNew([
             'menu_id' => $menu->id,
+            'title' => 'Post',
+            'url' => '',
+            'route' => 'voyager.posts.index',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target' => '_self',
+                'icon_class' => 'voyager-file-text',
+                'color' => null,
+                'parent_id' => null,
+                'order' => 5,
+            ])->save();
+        }
+
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menu->id,
             'title'   => __('voyager::seeders.menu_items.users'),
             'url'     => '',
             'route'   => 'voyager.users.index',
@@ -62,6 +78,22 @@ class MenuItemsTableSeeder extends Seeder
                 'color'      => null,
                 'parent_id'  => null,
                 'order'      => 3,
+            ])->save();
+        }
+
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menu->id,
+            'title' => __('voyager::seeders.menu_items.categories'),
+            'url' => '',
+            'route' => 'voyager.categories.index',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target' => '_self',
+                'icon_class' => 'voyager-diamond',
+                'color' => null,
+                'parent_id' => null,
+                'order' => 4,
             ])->save();
         }
 
@@ -173,6 +205,22 @@ class MenuItemsTableSeeder extends Seeder
                 'color'      => null,
                 'parent_id'  => null,
                 'order'      => 14,
+            ])->save();
+        }
+
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menu->id,
+            'title' => 'Country',
+            'url' => '',
+            'route' => 'voyager.countries.index',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target' => '_self',
+                'icon_class' => 'voyager-pie-chart',
+                'color' => null,
+                'parent_id' => null,
+                'order' => 14,
             ])->save();
         }
     }
